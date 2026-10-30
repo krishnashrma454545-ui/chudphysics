@@ -1,3 +1,4 @@
+use crate::collision::Shape;
 use crate::dynamics::Body;
 use crate::math::Vec2;
 use std::collections::HashMap;
@@ -19,9 +20,15 @@ impl BroadPhase {
         self.grid.clear();
 
         for (i, body) in bodies.iter().enumerate() {
-            let (x0, y0) = self.cell_of(body.pos - Vec2::new(body.radius, body.radius));
+            // Find a general radius for the grid bounds
+            let extent = match &body.shape {
+                Shape::Circle { radius } => *radius,
+                Shape::Aabb { half_extents } => half_extents.0.max(half_extents.1), // Max of X and Y
+                Shape::Triangle { size } => *size / 2.0,
+            };
 
-            let (x1, y1) = self.cell_of(body.pos + Vec2::new(body.radius, body.radius));
+            let (x0, y0) = self.cell_of(body.pos - Vec2::new(extent, extent));
+            let (x1, y1) = self.cell_of(body.pos + Vec2::new(extent, extent));
 
             for cx in x0..=x1 {
                 for cy in y0..=y1 {

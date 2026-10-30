@@ -32,18 +32,21 @@ fn test_broadphase_finds_candidates() {
             pos: Vec2::new(0.0, 0.0),
             vel: Vec2::ZERO,
             radius: 1.0,
+            restitution: 0.0,
         },
         Body {
             id: 1,
             pos: Vec2::new(1.0, 0.0),
             vel: Vec2::ZERO,
             radius: 1.0,
+            restitution: 0.0,
         },
         Body {
             id: 2,
             pos: Vec2::new(100.0, 100.0),
             vel: Vec2::ZERO,
             radius: 1.0,
+            restitution: 0.0,
         },
     ];
 

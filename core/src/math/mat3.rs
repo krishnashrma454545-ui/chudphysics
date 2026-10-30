@@ -1,4 +1,4 @@
-pub use vec3::Vec3;
+use super::vec3::Vec3;
 
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub struct Mat3 {
@@ -15,9 +15,9 @@ impl Mat3 {
     };
 
     pub const ZERO: Mat3 = Mat3 {
-        x_axis: Vec3::Zero,
-        y_axis: Vec3::Zero,
-        z_axis: Vec3::Zero,
+        x_axis: Vec3::ZERO,
+        y_axis: Vec3::ZERO,
+        z_axis: Vec3::ZERO,
     };
 
     // constructure
@@ -83,7 +83,7 @@ impl Mat3 {
     pub fn col(&self, i: usize) -> Vec3 {
         match i {
             0 => self.x_axis,
-            i => self.y_axis,
+            1 => self.y_axis,
             2 => self.z_axis,
             _ => panic!("Mat3 col out of bounds: {i}"),
         }
@@ -157,17 +157,54 @@ impl Mat3 {
 impl std::ops::Mul<Mat3> for Mat3 {
     type Output = Mat3;
 
-    fn mul(self, rhs: Mat3) -> Mat3 {}
+    fn mul(self, rhs: Mat3) -> Mat3 {
+        Mat3::from_cols(
+            self.transform_vector(rhs.x_axis),
+            self.transform_vector(rhs.y_axis),
+            self.transform_point(rhs.z_axis),
+        )
+    }
 }
 
 impl std::ops::Mul<Vec3> for Mat3 {
     type Output = Vec3;
+
+    fn mul(self, v: Vec3) -> Vec3 {
+        self.transform_vector(v)
+    }
+}
+
+impl std::ops::Mul<f64> for Mat3 {
+    type Output = Mat3;
+    fn mul(self, s: f64) -> Mat3 {
+        Mat3::from_cols(self.x_axis * s, self.y_axis * s, self.z_axis * s)
+    }
 }
 
 impl std::ops::Add for Mat3 {
     type Output = Mat3;
+    fn add(self, o: Mat3) -> Mat3 {
+        Mat3::from_cols(
+            self.x_axis + o.x_axis,
+            self.y_axis + o.y_axis,
+            self.z_axis + o.z_axis,
+        )
+    }
 }
 
-impl std::ops::Sub for Mat3 {}
+impl std::ops::Sub for Mat3 {
+    type Output = Mat3;
+    fn sub(self, o: Mat3) -> Mat3 {
+        Mat3::from_cols(
+            self.x_axis - o.x_axis,
+            self.y_axis - o.y_axis,
+            self.z_axis - o.z_axis,
+        )
+    }
+}
 
-impl Default for Mat3 {}
+impl Default for Mat3 {
+    fn default() -> Self {
+        Self::IDENTITY
+    }
+}

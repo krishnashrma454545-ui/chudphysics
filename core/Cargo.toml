@@ -11,5 +11,6 @@ name = "sim"
 path = "src/main.rs"
 
 [dependencies]
+macroquad = "0.4.16"
 tracing = "0.1.44"
 tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
