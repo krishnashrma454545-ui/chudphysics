@@ -80,3 +80,10 @@ impl std::ops::Div<f64> for Vec2 {
         Vec2::new(self.x / s, self.y / s)
     }
 }
+
+impl std::ops::Neg for Vec2 {
+    type Output = Vec2;
+    fn neg(self) -> Vec2 {
+        Vec2::new(-self.x, -self.y)
+    }
+}
