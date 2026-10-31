@@ -1,3 +1,5 @@
+use crate::math::Vec2;
+
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub struct Circle {
     /// Radius of the circle
@@ -7,8 +9,7 @@ pub struct Circle {
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub struct Square {
     /// Width (breadth) and height
-    pub x: f64,
-    pub y: f64,
+    pub size: Vec2,
 }
 
 #[derive(Copy, Clone, Debug, PartialEq)]
