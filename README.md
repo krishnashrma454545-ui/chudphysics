@@ -10,7 +10,7 @@ A 2D physics engine written completely from scratch in Rust. No external physics
 * **Visual Debugging:** Renders shapes in real-time using `macroquad` so you can see the math in action.
 
 ## Demo 
- ![example/ani.gif]
+![Demo](ani.gif)
 
 ## How to Run
 To run the visual physics simulation:
